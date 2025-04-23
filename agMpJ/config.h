@@ -2,9 +2,10 @@
 #define PERMISSIVE_HOLD
 
 #define USB_SUSPEND_WAKEUP_DELAY 0
-#define SERIAL_NUMBER "agMpJ/KrvrNL"
+#define SERIAL_NUMBER "agMpJ/eaWaRE"
 #define LAYER_STATE_8BIT
-#define COMBO_COUNT 2
+#define COMBO_COUNT 7
+#define HCS(report) host_consumer_send(record->event.pressed ? report : 0); return false
 
 #define RGB_MATRIX_STARTUP_SPD 60
 
