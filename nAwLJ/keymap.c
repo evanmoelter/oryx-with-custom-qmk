@@ -18,10 +18,10 @@ enum tap_dance_codes {
   DANCE_1,
 };
 
-#define DUAL_FUNC_0 LT(7, KC_1)
-#define DUAL_FUNC_1 LT(1, KC_F17)
-#define DUAL_FUNC_2 LT(9, KC_F4)
-#define DUAL_FUNC_3 LT(8, KC_T)
+#define DUAL_FUNC_0 LT(5, KC_F8)
+#define DUAL_FUNC_1 LT(10, KC_F16)
+#define DUAL_FUNC_2 LT(4, KC_F18)
+#define DUAL_FUNC_3 LT(11, KC_I)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [4] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_GRAVE,       KC_AT,          KC_TILD,        KC_PERC,        KC_AMPR,                                        KC_MINUS,       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_PLUS,        KC_TRANSPARENT, 
-    KC_TRANSPARENT, MT(MOD_LGUI, KC_LBRC),DUAL_FUNC_0,    DUAL_FUNC_1,    MT(MOD_LCTL, KC_RBRC),KC_PIPE,                                        KC_EQUAL,       KC_TRANSPARENT, DUAL_FUNC_2,    DUAL_FUNC_3,    KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, DUAL_FUNC_0,    MT(MOD_LALT, KC_LBRC),MT(MOD_LSFT, KC_RBRC),DUAL_FUNC_1,    KC_PIPE,                                        KC_EQUAL,       KC_TRANSPARENT, DUAL_FUNC_2,    DUAL_FUNC_3,    KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_CIRC,        KC_HASH,        KC_ASTR,        KC_DLR,         KC_BSLS,                                        QK_LLCK,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
@@ -177,9 +177,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       } else {
         if (record->event.pressed) {
-          register_code16(KC_LEFT_ALT);
+          register_code16(KC_LEFT_GUI);
         } else {
-          unregister_code16(KC_LEFT_ALT);
+          unregister_code16(KC_LEFT_GUI);
         }  
       }  
       return false;
@@ -192,9 +192,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       } else {
         if (record->event.pressed) {
-          register_code16(KC_LEFT_SHIFT);
+          register_code16(KC_LEFT_CTRL);
         } else {
-          unregister_code16(KC_LEFT_SHIFT);
+          unregister_code16(KC_LEFT_CTRL);
         }  
       }  
       return false;
