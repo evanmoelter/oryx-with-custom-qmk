@@ -15,12 +15,12 @@ enum custom_keycodes {
 
 
 
-#define DUAL_FUNC_0 LT(10, KC_F17)
-#define DUAL_FUNC_1 LT(3, KC_F18)
-#define DUAL_FUNC_2 LT(12, KC_E)
-#define DUAL_FUNC_3 LT(2, KC_9)
-#define DUAL_FUNC_4 LT(15, KC_F13)
-#define DUAL_FUNC_5 LT(5, KC_2)
+#define DUAL_FUNC_0 LT(5, KC_F15)
+#define DUAL_FUNC_1 LT(9, KC_F8)
+#define DUAL_FUNC_2 LT(1, KC_F21)
+#define DUAL_FUNC_3 LT(12, KC_G)
+#define DUAL_FUNC_4 LT(1, KC_2)
+#define DUAL_FUNC_5 LT(4, KC_G)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
@@ -32,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [1] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    QK_LLCK,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, LALT(KC_LEFT),  KC_TRANSPARENT, KC_TRANSPARENT, LALT(KC_RIGHT), KC_TRANSPARENT, 
+    QK_LLCK,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 LALT(KC_BSPC),  LALT(KC_LEFT),  KC_TRANSPARENT, KC_TRANSPARENT, LALT(KC_RIGHT), LALT(KC_DELETE),
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 LCTL(KC_LBRC),  KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       LCTL(KC_RBRC),  
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, QK_LLCK,                                        KC_TRANSPARENT, DUAL_FUNC_0,    KC_PGDN,        KC_PAGE_UP,     DUAL_FUNC_1,    KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [4] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_GRAVE,       KC_AT,          KC_TILD,        KC_PERC,        KC_AMPR,                                        KC_MINUS,       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_PLUS,        KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_GRAVE,       KC_AT,          KC_TILD,        KC_PERC,        KC_AMPR,                                        KC_MINUS,       KC_TRANSPARENT, KC_LABK,        KC_RABK,        KC_PLUS,        KC_TRANSPARENT, 
     KC_TRANSPARENT, DUAL_FUNC_2,    MT(MOD_LALT, KC_LBRC),MT(MOD_LSFT, KC_RBRC),DUAL_FUNC_3,    KC_PIPE,                                        KC_EQUAL,       KC_TRANSPARENT, DUAL_FUNC_4,    DUAL_FUNC_5,    KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_CIRC,        KC_HASH,        KC_ASTR,        KC_DLR,         KC_BSLS,                                        QK_LLCK,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
@@ -116,22 +116,29 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM + 50;
         case MT(MOD_LSFT, KC_D):
             return TAPPING_TERM -50;
-        case MT(MOD_LCTL, KC_F):
-            return TAPPING_TERM -50;
-        case MT(MOD_RCTL, KC_J):
-            return TAPPING_TERM -50;
         case MT(MOD_RSFT, KC_K):
             return TAPPING_TERM -50;
         case MT(MOD_RALT, KC_L):
             return TAPPING_TERM + 50;
         case MT(MOD_RGUI, KC_SCLN):
             return TAPPING_TERM + 50;
+        case MT(MOD_LSFT, KC_RBRC):
+            return TAPPING_TERM -50;
+        case DUAL_FUNC_4:
+            return TAPPING_TERM -50;
         default:
             return TAPPING_TERM;
     }
 }
 
+
 extern rgb_config_t rgb_matrix_config;
+
+RGB hsv_to_rgb_with_value(HSV hsv) {
+  RGB rgb = hsv_to_rgb( hsv );
+  float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+  return (RGB){ f * rgb.r, f * rgb.g, f * rgb.b };
+}
 
 void keyboard_post_init_user(void) {
   rgb_matrix_enable();
@@ -158,9 +165,8 @@ void set_layer_color(int layer) {
     if (!hsv.h && !hsv.s && !hsv.v) {
         rgb_matrix_set_color( i, 0, 0, 0 );
     } else {
-        RGB rgb = hsv_to_rgb( hsv );
-        float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-        rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
+        RGB rgb = hsv_to_rgb_with_value(hsv);
+        rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
     }
   }
 }
@@ -169,7 +175,7 @@ bool rgb_matrix_indicators_user(void) {
   if (rawhid_state.rgb_control) {
       return false;
   }
-  if (keyboard_config.disable_layer_led) { return false; }
+    if (keyboard_config.disable_layer_led) { return false; }
   switch (biton32(layer_state)) {
     case 0:
       set_layer_color(0);
@@ -184,10 +190,11 @@ bool rgb_matrix_indicators_user(void) {
       set_layer_color(4);
       break;
    default:
-    if (rgb_matrix_get_flags() == LED_FLAG_NONE)
-      rgb_matrix_set_color_all(0, 0, 0);
-    break;
+      if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
+        rgb_matrix_set_color_all(0, 0, 0);
+      }
   }
+
   return true;
 }
 
@@ -260,9 +267,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case DUAL_FUNC_4:
       if (record->tap.count > 0) {
         if (record->event.pressed) {
-          register_code16(KC_LABK);
+          register_code16(KC_LCBR);
         } else {
-          unregister_code16(KC_LABK);
+          unregister_code16(KC_LCBR);
         }
       } else {
         if (record->event.pressed) {
@@ -275,9 +282,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case DUAL_FUNC_5:
       if (record->tap.count > 0) {
         if (record->event.pressed) {
-          register_code16(KC_RABK);
+          register_code16(KC_RCBR);
         } else {
-          unregister_code16(KC_RABK);
+          unregister_code16(KC_RCBR);
         }
       } else {
         if (record->event.pressed) {
