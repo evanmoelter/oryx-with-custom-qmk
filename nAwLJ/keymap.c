@@ -15,14 +15,14 @@ enum custom_keycodes {
 
 
 
-#define DUAL_FUNC_0 LT(11, KC_F19)
-#define DUAL_FUNC_1 LT(1, KC_F19)
-#define DUAL_FUNC_2 LT(7, KC_M)
-#define DUAL_FUNC_3 LT(7, KC_B)
-#define DUAL_FUNC_4 LT(6, KC_F6)
-#define DUAL_FUNC_5 LT(10, KC_B)
-#define DUAL_FUNC_6 LT(3, KC_F19)
-#define DUAL_FUNC_7 LT(12, KC_F23)
+#define DUAL_FUNC_0 LT(10, KC_8)
+#define DUAL_FUNC_1 LT(13, KC_9)
+#define DUAL_FUNC_2 LT(15, KC_L)
+#define DUAL_FUNC_3 LT(4, KC_P)
+#define DUAL_FUNC_4 LT(7, KC_F4)
+#define DUAL_FUNC_5 LT(10, KC_K)
+#define DUAL_FUNC_6 LT(14, KC_F3)
+#define DUAL_FUNC_7 LT(12, KC_F)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
@@ -49,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [3] = LAYOUT_voyager(
     KC_SYSTEM_SLEEP,KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,                                          KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_F11,         KC_F12,         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_BRIGHTNESS_DOWN,KC_BRIGHTNESS_UP,KC_MEDIA_PLAY_PAUSE,RGB_VAI,        
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, MT(MOD_RCTL, KC_MEDIA_PREV_TRACK),MT(MOD_RSFT, KC_AUDIO_VOL_DOWN),MT(MOD_RALT, KC_AUDIO_VOL_UP),MT(MOD_RGUI, KC_MEDIA_NEXT_TRACK),RGB_VAD,        
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TO(7),                                          KC_TRANSPARENT, MT(MOD_RCTL, KC_MEDIA_PREV_TRACK),MT(MOD_RSFT, KC_AUDIO_VOL_DOWN),MT(MOD_RALT, KC_AUDIO_VOL_UP),MT(MOD_RGUI, KC_MEDIA_NEXT_TRACK),RGB_VAD,        
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 QK_LLCK,        KC_TRANSPARENT, MEH_T(KC_AUDIO_MUTE),KC_MEDIA_PLAY_PAUSE,KC_TRANSPARENT, KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
@@ -73,6 +73,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
+  ),
+  [7] = LAYOUT_voyager(
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TAB,         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TO(0),          
+    KC_LEFT_SHIFT,  KC_A,           KC_S,           KC_D,           KC_F,           KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_J,           KC_K,           KC_L,           KC_SCLN,        KC_TRANSPARENT, 
+    KC_LEFT_CTRL,   KC_TRANSPARENT, KC_TRANSPARENT, KC_C,           KC_V,           KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_M,           KC_COMMA,       KC_TRANSPARENT, KC_TRANSPARENT, KC_LEFT_ALT,    
+                                                    KC_SPACE,       KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_BSPC
   ),
 };
 
@@ -157,6 +164,8 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
     [4] = { {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255}, {7,219,255} },
 
+    [7] = { {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255} },
+
 };
 
 void set_layer_color(int layer) {
@@ -192,6 +201,9 @@ bool rgb_matrix_indicators_user(void) {
         break;
       case 4:
         set_layer_color(4);
+        break;
+      case 7:
+        set_layer_color(7);
         break;
      default:
         if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
