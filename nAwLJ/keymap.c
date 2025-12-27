@@ -13,7 +13,14 @@ enum custom_keycodes {
   MAC_LOCK,
 };
 
-
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
+  LAYOUT_voyager(
+    'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R', 
+    'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R', 
+    'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R', 
+    'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R', 
+                        '*', '*',  '*', '*'
+  );
 
 #define DUAL_FUNC_0 LT(10, KC_8)
 #define DUAL_FUNC_1 LT(13, KC_9)
