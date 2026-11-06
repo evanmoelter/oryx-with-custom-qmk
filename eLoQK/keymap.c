@@ -15,17 +15,17 @@ enum custom_keycodes {
 
 
 
-#define DUAL_FUNC_0 LT(10, KC_N)
-#define DUAL_FUNC_1 LT(13, KC_F7)
-#define DUAL_FUNC_2 LT(5, KC_F13)
-#define DUAL_FUNC_3 LT(8, KC_F8)
-#define DUAL_FUNC_4 LT(6, KC_P)
-#define DUAL_FUNC_5 LT(10, KC_F22)
-#define DUAL_FUNC_6 LT(10, KC_J)
-#define DUAL_FUNC_7 LT(11, KC_F20)
-#define DUAL_FUNC_8 LT(4, KC_E)
-#define DUAL_FUNC_9 LT(7, KC_F24)
-#define DUAL_FUNC_10 LT(1, KC_F12)
+#define DUAL_FUNC_0 LT(13, KC_F18)
+#define DUAL_FUNC_1 LT(14, KC_V)
+#define DUAL_FUNC_2 LT(3, KC_T)
+#define DUAL_FUNC_3 LT(6, KC_U)
+#define DUAL_FUNC_4 LT(13, KC_F6)
+#define DUAL_FUNC_5 LT(14, KC_L)
+#define DUAL_FUNC_6 LT(6, KC_F21)
+#define DUAL_FUNC_7 LT(11, KC_R)
+#define DUAL_FUNC_8 LT(12, KC_F19)
+#define DUAL_FUNC_9 LT(2, KC_F17)
+#define DUAL_FUNC_10 LT(7, KC_F2)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
@@ -43,10 +43,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [2] = LAYOUT_voyager(
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    QK_LLCK,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_PERC,        KC_TRANSPARENT,                                 KC_DLR,         KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_PLUS,        KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_EQUAL,       KC_KP_4,        KC_KP_5,        KC_KP_6,        KC_ASTR,        KC_TRANSPARENT, 
-    KC_BSPC,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_BSPC,        KC_KP_1,        DUAL_FUNC_4,    DUAL_FUNC_5,    KC_KP_SLASH,    KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_KP_ASTERISK, KC_TRANSPARENT, 
+    QK_LLCK,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TILD,        KC_PERC,        KC_TRANSPARENT,                                 KC_BSPC,        KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_PLUS,        KC_NUM,         
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_EQUAL,       KC_KP_4,        KC_KP_5,        KC_KP_6,        KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_HASH,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_KP_0,        KC_KP_1,        DUAL_FUNC_4,    DUAL_FUNC_5,    KC_KP_SLASH,    KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, DUAL_FUNC_6
   ),
   [3] = LAYOUT_voyager(
@@ -141,6 +141,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+bool numlock_active = false;
+
+bool led_update_user(led_t led_state) {
+  numlock_active = led_state.num_lock;
+  return true;
+}
 
 extern rgb_config_t rgb_matrix_config;
 
@@ -215,6 +221,10 @@ bool rgb_matrix_indicators_user(void) {
     }
   }
 
+  if (numlock_active && biton32(layer_state) == 2) {
+    RGB rgb = hsv_to_rgb_with_value((HSV) { 64, 219, 242 });
+    rgb_matrix_set_color( 37, rgb.r, rgb.g, rgb.b );
+  } 
   return true;
 }
 
